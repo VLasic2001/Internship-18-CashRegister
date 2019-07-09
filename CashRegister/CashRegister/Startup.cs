@@ -1,4 +1,6 @@
 using CashRegister.Data.Entities;
+using CashRegister.Domain.Repositories.Implementations;
+using CashRegister.Domain.Repositories.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -27,6 +29,10 @@ namespace CashRegister
         {
             services.AddDbContext<CashRegisterContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("CashRegisterContext")));
+
+            services.AddScoped<ICashierRepository, CashierRepository>();
+            services.AddScoped<IProductRepository, ProductRepository>();
+
             services.AddMvc().AddJsonOptions(options =>
                 {
                     options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;

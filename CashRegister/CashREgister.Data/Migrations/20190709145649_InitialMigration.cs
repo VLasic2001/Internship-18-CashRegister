@@ -31,7 +31,7 @@ namespace CashRegister.Data.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Barcode = table.Column<string>(nullable: true),
                     Name = table.Column<string>(nullable: true),
-                    PriceWithTax = table.Column<double>(nullable: false),
+                    PriceWithoutTax = table.Column<double>(nullable: false),
                     Type = table.Column<int>(nullable: false),
                     AvailableAmount = table.Column<int>(nullable: false)
                 },

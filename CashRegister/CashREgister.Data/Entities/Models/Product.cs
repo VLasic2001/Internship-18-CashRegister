@@ -12,7 +12,7 @@ namespace CashRegister.Data.Entities.Models
 
         public string Barcode { get; set; }
         public string Name { get; set; }
-        public double PriceWithTax { get; set; }
+        public double PriceWithoutTax { get; set; }
         public TaxType Type { get; set; }
         public int AvailableAmount { get; set; }
     }
