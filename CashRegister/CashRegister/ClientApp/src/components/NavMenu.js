@@ -1,13 +1,4 @@
 import React, { Component } from "react";
-import {
-  Collapse,
-  Container,
-  Navbar,
-  NavbarBrand,
-  NavbarToggler,
-  NavItem,
-  NavLink
-} from "reactstrap";
 import { Link } from "react-router-dom";
 import "./NavMenu.css";
 
@@ -31,46 +22,26 @@ export class NavMenu extends Component {
 
   render() {
     return (
-      <header>
-        <Navbar
-          className="navbar-expand-sm navbar-toggleable-sm ng-white border-bottom box-shadow mb-3"
-          light
-        >
-          <Container>
-            <NavbarBrand tag={Link} to="/">
-              CashRegister
-            </NavbarBrand>
-            <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
-            <Collapse
-              className="d-sm-inline-flex flex-sm-row-reverse"
-              isOpen={!this.state.collapsed}
-              navbar
-            >
-              <ul className="navbar-nav flex-grow">
-                <NavItem>
-                  <NavLink tag={Link} className="text-dark" to="/">
-                    Home
-                  </NavLink>
-                </NavItem>
-                <NavItem>
-                  <NavLink tag={Link} className="text-dark" to="/counter">
-                    Counter
-                  </NavLink>
-                </NavItem>
-                <NavItem>
-                  <NavLink tag={Link} className="text-dark" to="/fetch-data">
-                    Fetch data
-                  </NavLink>
-                </NavItem>
-                <NavItem>
-                  <NavLink tag={Link} className="text-dark" to="/products">
-                    Products
-                  </NavLink>
-                </NavItem>
-              </ul>
-            </Collapse>
-          </Container>
-        </Navbar>
+      <header className="navbar-expand-sm navbar-toggleable-sm ng-white border-bottom box-shadow mb-3">
+        <div className="navbar-nav flex-grow">
+          <h4 className="title">Cash Register</h4>
+          <Link to="/receipts/add" className="ml-10">
+            Add Receipt
+          </Link>
+          <Link to="/receipts" className="ml-10">
+            Receipts
+          </Link>
+          <Link to="/products" className="ml-10">
+            Products
+          </Link>
+          <Link to="/products/add" className="ml-10">
+            Add Product
+          </Link>
+        </div>
+        <div>
+          <button className="buttons">Switch Register</button>
+          <button className="buttons">Log out</button>
+        </div>
       </header>
     );
   }

@@ -48,7 +48,7 @@ namespace CashRegister.Data.Migrations
 
                     b.Property<string>("Name");
 
-                    b.Property<double>("PriceWithoutTax");
+                    b.Property<double>("PriceWithTax");
 
                     b.Property<int>("Type");
 

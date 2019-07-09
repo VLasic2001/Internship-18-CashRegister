@@ -1,22 +1,20 @@
 import React, { Component } from "react";
-import { Route, Link } from "react-router";
-import { Layout } from "./components/Layout";
+import { Route } from "react-router";
+import { NavMenu } from "./components/NavMenu";
 import { Home } from "./components/Home";
-import { FetchData } from "./components/FetchData";
-import { Counter } from "./components/Counter";
-import ProductList from "./components/ProductList";
+import Products from "./components/Products";
 
 export default class App extends Component {
   static displayName = App.name;
 
   render() {
     return (
-      <Layout>
+      <div>
+        <NavMenu />
         <Route exact path="/" component={Home} />
-        <Route path="/counter" component={Counter} />
-        <Route path="/fetch-data" component={FetchData} />
-        <Route path="/products" component={ProductList} />
-      </Layout>
+        {/* <Route path="/counter" component={Counter} /> */}
+        <Route path="/products" component={Products} />
+      </div>
     );
   }
 }

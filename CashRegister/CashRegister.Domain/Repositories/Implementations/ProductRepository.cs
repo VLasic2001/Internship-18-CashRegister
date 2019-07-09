@@ -48,7 +48,7 @@ namespace CashRegister.Domain.Repositories.Implementations
 
             productToEdit.Barcode = editedProduct.Barcode;
             productToEdit.Type = editedProduct.Type;
-            productToEdit.PriceWithoutTax = editedProduct.PriceWithoutTax;
+            productToEdit.PriceWithTax = editedProduct.PriceWithTax;
 
             _context.SaveChanges();
 
