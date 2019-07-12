@@ -32,6 +32,7 @@ namespace CashRegister
 
             services.AddScoped<ICashierRepository, CashierRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IReceiptRepository, ReceiptRepository>();
 
             services.AddMvc().AddJsonOptions(options =>
                 {

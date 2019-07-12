@@ -4,6 +4,36 @@
   word-break: break-all;
 }
 
+.container {
+  display: flex;
+  flex-direction: row;
+}
+
+.receipt-container {
+  width: 50%;
+}
+
+.scroll {
+  overflow-y: scroll;
+}
+
+.receipt-row {
+  display: flex;
+  justify-content: space-between;
+  margin-right: 15px;
+  margin-bottom: 5px;
+  background-color: lightseagreen;
+  border: 1px solid blueviolet;
+}
+
+.remove-button {
+  background-color: transparent;
+  border: none;
+  margin: 0 5px;
+  color: red;
+  font-weight: bolder;
+}
+
 .ml-10 {
   padding-right: 7.5px;
   padding-left: 7.5px;
@@ -25,7 +55,25 @@
 .submit-button {
   border: none;
   background-color: lightblue;
-  padding: 2 5px;
+  padding: 2px 5px;
+  border-radius: 4px;
+}
+
+.product {
+  background-color: lightseagreen;
+  border: 1px solid blueviolet;
+  margin: 5px 0;
+  padding: 0 0 5px 5px;
+  box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.05);
+}
+
+.edit-button {
+  color: white;
+  background-color: blueviolet;
+  border: none;
+  display: inline-block;
+  padding: 2px 7px;
+  margin-top: 5px;
   border-radius: 4px;
 }
 

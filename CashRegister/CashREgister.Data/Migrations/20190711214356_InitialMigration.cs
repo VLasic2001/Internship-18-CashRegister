@@ -14,6 +14,7 @@ namespace CashRegister.Data.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Password = table.Column<string>(nullable: true),
                     FirstName = table.Column<string>(nullable: true),
                     LastName = table.Column<string>(nullable: true),
                     DateOfBirth = table.Column<DateTime>(nullable: false)
@@ -57,6 +58,7 @@ namespace CashRegister.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
+                    DateOfIssue = table.Column<DateTime>(nullable: false),
                     CashierId = table.Column<int>(nullable: false),
                     RegisterId = table.Column<int>(nullable: false)
                 },

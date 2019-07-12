@@ -30,6 +30,16 @@ namespace CashRegister.Data.Entities
                 .HasOne(rp => rp.Product)
                 .WithMany(p => p.ReceiptProducts)
                 .HasForeignKey(rp => rp.ProductId);
+
+            modelBuilder.Entity<Cashier>()
+           .HasData(new Cashier { Id=1, FirstName = "Ante", LastName = "Antic", Password="ant", DateOfBirth=new DateTime(2001, 06, 10) },
+                    new Cashier { Id=2, FirstName = "Ivan", LastName = "Ivanic", Password = "iva", DateOfBirth = new DateTime(1991, 06, 10) }
+           );
+
+            modelBuilder.Entity<Register>()
+           .HasData(new Register {Id=1},
+                    new Register {Id=2}
+           );
         }
     }
 }

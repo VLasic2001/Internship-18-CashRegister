@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CashRegister.Data.Migrations
 {
     [DbContext(typeof(CashRegisterContext))]
-    [Migration("20190709212316_InitialMigration")]
+    [Migration("20190711214356_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,6 +32,8 @@ namespace CashRegister.Data.Migrations
                     b.Property<string>("FirstName");
 
                     b.Property<string>("LastName");
+
+                    b.Property<string>("Password");
 
                     b.HasKey("Id");
 
@@ -65,6 +67,8 @@ namespace CashRegister.Data.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<int>("CashierId");
+
+                    b.Property<DateTime>("DateOfIssue");
 
                     b.Property<int>("RegisterId");
 

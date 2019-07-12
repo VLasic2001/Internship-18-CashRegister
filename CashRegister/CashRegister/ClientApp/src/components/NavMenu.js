@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import "./NavMenu.css";
+import Axios from "axios";
 
 export class NavMenu extends Component {
   static displayName = NavMenu.name;
@@ -9,6 +10,8 @@ export class NavMenu extends Component {
     super(props);
 
     this.toggleNavbar = this.toggleNavbar.bind(this);
+    this.handleSwitchCashier = this.handleSwitchCashier.bind(this);
+    this.handleSwitchRegister = this.handleSwitchRegister.bind(this);
     this.state = {
       collapsed: true
     };
@@ -18,6 +21,18 @@ export class NavMenu extends Component {
     this.setState({
       collapsed: !this.state.collapsed
     });
+  }
+
+  handleSwitchCashier() {
+    Axios.get("/api/cashiers/get-by-id", { params: { id: 1 } }).then(
+      response => {
+        localStorage.setItem("cashier", JSON.stringify(response.data));
+      }
+    );
+  }
+
+  handleSwitchRegister() {
+    localStorage.setItem("registerId", 1);
   }
 
   render() {
@@ -39,8 +54,18 @@ export class NavMenu extends Component {
           </Link>
         </div>
         <div>
-          <button className="buttons">Switch Register</button>
-          <button className="buttons">Log out</button>
+          <button
+            className="buttons"
+            onClick={() => this.handleSwitchRegister()}
+          >
+            Switch Register
+          </button>
+          <button
+            className="buttons"
+            onClick={() => this.handleSwitchCashier()}
+          >
+            Log out
+          </button>
         </div>
       </header>
     );

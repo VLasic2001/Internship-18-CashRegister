@@ -19,6 +19,7 @@ namespace CashRegister.Domain.Repositories.Implementations
 
         public List<Product> GetAllProducts()
         {
+
             return _context.Products.ToList();
         }
 
@@ -26,7 +27,7 @@ namespace CashRegister.Domain.Repositories.Implementations
         {
             var doesProductExist = _context.Products.Any(product =>
                 string.Equals(product.Barcode, productToAdd.Barcode, StringComparison.CurrentCultureIgnoreCase));
-            if (doesProductExist || String.IsNullOrEmpty(productToAdd.Barcode))
+            if (doesProductExist || string.IsNullOrEmpty(productToAdd.Barcode))
                 return false;
 
             _context.Products.Add(productToAdd);
@@ -42,9 +43,9 @@ namespace CashRegister.Domain.Repositories.Implementations
 
             var doesEditedProductExist = _context.Products.Any(product =>
                 string.Equals(product.Barcode, editedProduct.Barcode, StringComparison.CurrentCultureIgnoreCase) &&
-                !string.Equals(product.Name, editedProduct.Name, StringComparison.CurrentCultureIgnoreCase));
-            if (doesEditedProductExist || String.IsNullOrEmpty(editedProduct.Barcode))
-                return false;  
+                !string.Equals(product.Barcode, productToEdit.Barcode, StringComparison.CurrentCultureIgnoreCase));
+            if (doesEditedProductExist || string.IsNullOrEmpty(editedProduct.Barcode))
+                return false;
 
             productToEdit.Barcode = editedProduct.Barcode;
             productToEdit.Type = editedProduct.Type;
@@ -58,6 +59,11 @@ namespace CashRegister.Domain.Repositories.Implementations
         public Product GetProductById(int id)
         {
             return _context.Products.Find(id);
+        }
+
+        public List<Product> GetProductsContainingString(string search)
+        {
+            return _context.Products.Where(product => product.Name.Contains(search)).ToList();
         }
     }
 }

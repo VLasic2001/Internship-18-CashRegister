@@ -14,5 +14,7 @@ namespace CashRegister.Domain.Repositories.Interfaces
         bool EditProduct(Product editedProduct);
 
         Product GetProductById(int id);
+
+        List<Product> GetProductsContainingString(string search);
     }
 }

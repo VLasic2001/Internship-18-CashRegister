@@ -1,10 +1,27 @@
 import React, { Component } from "react";
+import { withRouter } from "react-router-dom";
 import Axios from "axios";
 
-class AddProduct extends Component {
+class EditProduct extends Component {
   constructor(props) {
     super(props);
     this.state = {};
+  }
+
+  componentDidMount() {
+    const id = this.props.match.params.id;
+    Axios.get("/api/products/get-by-id", { params: { id: id } }).then(
+      response => {
+        this.setState({
+          barcodeInput: response.data.barcode,
+          nameInput: response.data.name,
+          priceInput: response.data.priceWithTax,
+          typeInput: response.data.type,
+          amountInput: response.data.availableAmount,
+          id: response.data.id
+        });
+      }
+    );
   }
 
   handleInputChange(e) {
@@ -12,19 +29,25 @@ class AddProduct extends Component {
   }
 
   handleSubmit() {
-    Axios.post("api/products/add", {
+    Axios.post("api/products/edit", {
       barcode: this.state.barcodeInput,
       name: this.state.nameInput,
       priceWithTax: this.state.priceInput,
       type: this.refs.taxType.value,
-      availableAmount: this.state.amountInput
-    });
+      availableAmount: this.state.amountInput,
+      id: this.state.id
+    })
+      .then(response => {
+        alert("Edit successful");
+        this.props.history.push("/products");
+      })
+      .catch(() => alert("Edit unsuccessful"));
   }
 
   render() {
     return (
-      <div className="add-form">
-        <h3>Add Product</h3>
+      <div>
+        <h3>Edit Product</h3>
         <p>
           Barcode:{" "}
           <input
@@ -37,10 +60,10 @@ class AddProduct extends Component {
         <p>
           Name:{" "}
           <input
+            disabled="disabled"
             name="nameInput"
             value={this.state.nameInput}
             placeholder="e.g. Coca-Cola"
-            onChange={e => this.handleInputChange(e)}
           />
         </p>
         <p>
@@ -63,19 +86,19 @@ class AddProduct extends Component {
         <p>
           Available amount:{" "}
           <input
+            disabled="disabled"
             name="amountInput"
             type="number"
             value={this.state.amountInput}
             placeholder="e.g. 100"
-            onChange={e => this.handleInputChange(e)}
           />
         </p>
         <button className="submit-button" onClick={() => this.handleSubmit()}>
-          Add Product
+          Edit Product
         </button>
       </div>
     );
   }
 }
 
-export default AddProduct;
+export default withRouter(EditProduct);

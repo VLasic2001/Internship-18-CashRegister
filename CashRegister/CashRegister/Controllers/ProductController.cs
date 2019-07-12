@@ -24,6 +24,7 @@ namespace CashRegister.Web.Controllers
         public IActionResult GetAllProducts()
         {
             return Ok(_productRepository.GetAllProducts());
+
         }
 
         [HttpPost("add")]
@@ -40,7 +41,7 @@ namespace CashRegister.Web.Controllers
         {
             var wasEditSuccessful = _productRepository.EditProduct(editedProduct);
             if (wasEditSuccessful)
-                return Ok();
+                return Ok(wasEditSuccessful);
             return Forbid();
         }
 
@@ -50,6 +51,15 @@ namespace CashRegister.Web.Controllers
             var product = _productRepository.GetProductById(id);
             if (product != null)
                 return Ok(product);
+            return NotFound();
+        }
+
+        [HttpGet("search-products")]
+        public IActionResult GetProductsContainingString(string search)
+        {
+            var products = _productRepository.GetProductsContainingString(search);
+            if (products != null)
+                return Ok(products);
             return NotFound();
         }
     }

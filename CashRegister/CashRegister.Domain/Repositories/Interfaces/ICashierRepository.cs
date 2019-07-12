@@ -7,6 +7,8 @@ namespace CashRegister.Domain.Repositories.Interfaces
 {
     public interface ICashierRepository
     {
-        //List<Cashier> GetAllCashiers
+        List<Cashier> GetAllCashiers();
+
+        Cashier GetCashierById(int id);
     }
 }
