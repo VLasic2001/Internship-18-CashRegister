@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { Printd } from "printd";
 
 class ProductList extends Component {
   constructor(props) {
@@ -25,6 +26,8 @@ class ProductList extends Component {
     );
     return sum;
   }
+
+  handlePrint(receipt) {}
 
   render() {
     let content = this.state.loading ? (
@@ -58,11 +61,19 @@ class ProductList extends Component {
                 </p>
                 <p>Total Price: {this.priceSumOfReceipt(receipt)}</p>
                 <div>
-                  <Link className="edit-button" to={`/products/${receipt.id}`}>
+                  <Link
+                    className="edit-button"
+                    to={`/receipts/details/${receipt.id}`}
+                  >
                     Details
                   </Link>
                   {"  "}
-                  <button className="edit-button">Print</button>
+                  <button
+                    className="edit-button"
+                    onClick={() => this.handlePrint(receipt)}
+                  >
+                    Print
+                  </button>
                 </div>
               </div>
             </div>

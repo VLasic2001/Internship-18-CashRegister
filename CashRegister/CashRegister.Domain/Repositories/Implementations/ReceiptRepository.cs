@@ -43,9 +43,9 @@ namespace CashRegister.Domain.Repositories.Implementations
             return _context.Receipts.Include(receipt => receipt.ReceiptProducts).Include(receipt => receipt.Cashier).ToList();
         }
 
-        public Receipt GetReceiptById(int id)
+        public Receipt GetReceiptById(Guid id)
         {
-            return _context.Receipts.Find(id);
+            return _context.Receipts.Include(r => r.Cashier).Include(r => r.ReceiptProducts).ThenInclude(rp => rp.Product).First(receipt => receipt.Id == id);
         }
     }
 }

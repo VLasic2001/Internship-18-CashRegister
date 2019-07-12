@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import axios from "axios";
 
-class AddReceipt extends Component {
+class ProductDelivery extends Component {
   constructor(props) {
     super(props);
     this.state = { selectedProducts: [], loading: true };
@@ -67,27 +67,18 @@ class AddReceipt extends Component {
 
   handleSubmit() {
     let { selectedProducts } = this.state;
-    selectedProducts = selectedProducts.filter(
-      selectedProduct => this.refs[selectedProduct.name].value > 0
-    );
-    let receiptProducts = selectedProducts.map(selectedProduct => {
+    let productAmounts = selectedProducts.map(selectedProduct => {
       return {
         productId: selectedProduct.id,
-        quantity: this.refs[selectedProduct.name].value,
-        taxType: selectedProduct.taxType,
-        price: selectedProduct.priceWithTax
+        quantity: this.refs[selectedProduct.name].value
       };
     });
-    let receipt = {
-      cashierId: JSON.parse(localStorage.getItem("cashier")).id,
-      registerId: 1,
-      receiptProducts: receiptProducts
-    };
+
     axios
-      .post("api/receipts/add", receipt)
+      .post("api/products/delivery", productAmounts)
       .then(() => {
         alert("Add successful");
-        this.props.history.push("/receipts");
+        this.props.history.push("/products");
       })
       .catch(() => alert("Add unsuccessful"));
   }
@@ -122,7 +113,7 @@ class AddReceipt extends Component {
     return (
       <div className="container">
         <div className="receipt-container">
-          <h3>Add Receipt</h3>
+          <h3>Add Delivered Products</h3>
           {this.state.selectedProducts.map(product => {
             return (
               <div className="receipt-row">
@@ -132,7 +123,6 @@ class AddReceipt extends Component {
                 <div>
                   Quantity:{" "}
                   <input
-                    min="0"
                     type="number"
                     onChange={e => this.handleInputChange(e)}
                     ref={product.name}
@@ -154,14 +144,14 @@ class AddReceipt extends Component {
               onClick={() => this.handleSubmit()}
               disabled={this.state.selectedProducts.length < 1}
             >
-              Complete Receipt
+              Complete delivery
             </button>{" "}
             <button
               className="submit-button"
               onClick={() => this.handleClear()}
               disabled={this.state.selectedProducts.length < 1}
             >
-              Clear Receipt
+              Clear Delivery
             </button>
           </div>
         </div>
@@ -171,4 +161,4 @@ class AddReceipt extends Component {
   }
 }
 
-export default withRouter(AddReceipt);
+export default withRouter(ProductDelivery);

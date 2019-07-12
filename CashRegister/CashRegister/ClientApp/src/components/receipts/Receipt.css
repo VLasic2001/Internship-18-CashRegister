@@ -1,0 +1,5 @@
+td,
+th {
+  width: 300px;
+  border-right: 20px solid transparent;
+}

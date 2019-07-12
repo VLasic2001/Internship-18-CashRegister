@@ -52,6 +52,9 @@ export class NavMenu extends Component {
           <Link to="/products/add" className="ml-10">
             Add Product
           </Link>
+          <Link to="/products/delivery" className="ml-10">
+            Delivery
+          </Link>
         </div>
         <div>
           <button

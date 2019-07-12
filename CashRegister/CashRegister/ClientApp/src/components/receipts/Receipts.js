@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Route } from "react-router";
 import AddReceipt from "./AddReceipt";
-// import EditReceipt from "./EditReceipt";
+import ReceiptDetails from "./ReceiptDetails";
 import ReceiptList from "./ReceiptList";
 
 class Receipts extends Component {
@@ -10,7 +10,7 @@ class Receipts extends Component {
       <div>
         <Route exact path="/receipts" component={ReceiptList} />
         <Route path="/receipts/add" component={AddReceipt} />
-        {/* <Route path="/receipts/edit/:id" component={EditReceipt} /> */}
+        <Route path="/receipts/details/:id" component={ReceiptDetails} />
       </div>
     );
   }

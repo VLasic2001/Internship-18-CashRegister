@@ -36,7 +36,7 @@ namespace CashRegister.Web.Controllers
         }
 
         [HttpGet("get-by-id")]
-        public IActionResult GetReceiptById(int id)
+        public IActionResult GetReceiptById(Guid id)
         {
             var receipt = _receiptRepository.GetReceiptById(id);
             if (receipt != null)

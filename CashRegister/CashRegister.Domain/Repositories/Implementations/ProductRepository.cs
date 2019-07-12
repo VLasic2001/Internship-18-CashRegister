@@ -65,5 +65,20 @@ namespace CashRegister.Domain.Repositories.Implementations
         {
             return _context.Products.Where(product => product.Name.Contains(search)).ToList();
         }
+
+        public bool AddProductAmount(List<ProductAmount> productAmounts)
+        {
+            var canAddAll = productAmounts.All(productAmount => _context.Products.Any(product => product.Id == productAmount.ProductId) && productAmount.Quantity >= 0);
+            if (canAddAll)
+            {
+                productAmounts.ForEach(productAmount =>
+                    _context.Products.First(product =>
+                    product.Id == productAmount.ProductId)
+                    .AvailableAmount += productAmount.Quantity);
+                _context.SaveChanges();
+                return true;
+            }
+            return false;
+        }
     }
 }
