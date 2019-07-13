@@ -111,8 +111,10 @@ class AddReceipt extends Component {
 
   handleSubmit() {
     let { selectedProducts } = this.state;
-    selectedProducts = selectedProducts.filter(
-      selectedProduct => this.refs[selectedProduct.name].value > 0
+    selectedProducts = selectedProducts.filter(selectedProduct =>
+      this.refs[selectedProduct.name] !== undefined
+        ? this.refs[selectedProduct.name].value > 0
+        : false
     );
     if (selectedProducts.length < 1) {
       return;
