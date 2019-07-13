@@ -31,6 +31,7 @@ namespace CashRegister
                 options.UseSqlServer(Configuration.GetConnectionString("CashRegisterContext")));
 
             services.AddScoped<ICashierRepository, CashierRepository>();
+            services.AddScoped<IRegisterRepository, RegisterRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IReceiptRepository, ReceiptRepository>();
 

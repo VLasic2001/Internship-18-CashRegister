@@ -15,7 +15,9 @@ namespace CashRegister.Domain.Repositories.Interfaces
 
         Product GetProductById(int id);
 
-        List<Product> GetProductsContainingString(string search);
+        List<Product> GetProductsWithNameContainingString(string search);
+
+        List<Product> GetProductsWithBarcodeContainingString(string search);
 
         bool AddProductAmount(List<ProductAmount> products);
     }

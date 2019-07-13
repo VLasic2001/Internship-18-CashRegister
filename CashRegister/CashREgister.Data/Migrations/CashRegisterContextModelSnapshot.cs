@@ -44,7 +44,7 @@ namespace CashRegister.Data.Migrations
                             DateOfBirth = new DateTime(2001, 6, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             FirstName = "Ante",
                             LastName = "Antic",
-                            Password = "ant"
+                            Password = "ViLr7GL4ZhzGCtp4vA0cucfcv3v7QOvQLVz22WWE8VhT9T58"
                         },
                         new
                         {
@@ -52,7 +52,7 @@ namespace CashRegister.Data.Migrations
                             DateOfBirth = new DateTime(1991, 6, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             FirstName = "Ivan",
                             LastName = "Ivanic",
-                            Password = "iva"
+                            Password = "pepHuDFdruzQWOmMm/11oojAiq+MI9mpE11DIJM39Kx0tC3u"
                         });
                 });
 

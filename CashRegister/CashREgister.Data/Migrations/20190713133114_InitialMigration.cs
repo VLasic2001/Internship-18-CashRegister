@@ -106,6 +106,24 @@ namespace CashRegister.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.InsertData(
+                table: "Cashiers",
+                columns: new[] { "Id", "DateOfBirth", "FirstName", "LastName", "Password" },
+                values: new object[,]
+                {
+                    { 1, new DateTime(2001, 6, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), "Ante", "Antic", "ViLr7GL4ZhzGCtp4vA0cucfcv3v7QOvQLVz22WWE8VhT9T58" },
+                    { 2, new DateTime(1991, 6, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), "Ivan", "Ivanic", "pepHuDFdruzQWOmMm/11oojAiq+MI9mpE11DIJM39Kx0tC3u" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Registers",
+                column: "Id",
+                values: new object[]
+                {
+                    1,
+                    2
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_ReceiptProducts_ProductId",
                 table: "ReceiptProducts",

@@ -60,12 +60,7 @@ namespace CashRegister.Domain.Repositories.Implementations
         {
             return _context.Products.Find(id);
         }
-
-        public List<Product> GetProductsContainingString(string search)
-        {
-            return _context.Products.Where(product => product.Name.Contains(search)).ToList();
-        }
-
+        
         public bool AddProductAmount(List<ProductAmount> productAmounts)
         {
             var canAddAll = productAmounts.All(productAmount => _context.Products.Any(product => product.Id == productAmount.ProductId) && productAmount.Quantity >= 0);
@@ -79,6 +74,16 @@ namespace CashRegister.Domain.Repositories.Implementations
                 return true;
             }
             return false;
+        }
+
+        public List<Product> GetProductsWithNameContainingString(string search)
+        {
+            return _context.Products.Where(product => product.Name.Contains(search)).ToList();
+        }
+
+        public List<Product> GetProductsWithBarcodeContainingString(string search)
+        {
+            return _context.Products.Where(product => product.Barcode.Contains(search)).ToList();
         }
     }
 }

@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CashRegister.Data.Migrations
 {
     [DbContext(typeof(CashRegisterContext))]
-    [Migration("20190711214356_InitialMigration")]
+    [Migration("20190713133114_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -38,6 +38,24 @@ namespace CashRegister.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Cashiers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            DateOfBirth = new DateTime(2001, 6, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            FirstName = "Ante",
+                            LastName = "Antic",
+                            Password = "ViLr7GL4ZhzGCtp4vA0cucfcv3v7QOvQLVz22WWE8VhT9T58"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            DateOfBirth = new DateTime(1991, 6, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            FirstName = "Ivan",
+                            LastName = "Ivanic",
+                            Password = "pepHuDFdruzQWOmMm/11oojAiq+MI9mpE11DIJM39Kx0tC3u"
+                        });
                 });
 
             modelBuilder.Entity("CashRegister.Data.Entities.Models.Product", b =>
@@ -109,6 +127,16 @@ namespace CashRegister.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Registers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1
+                        },
+                        new
+                        {
+                            Id = 2
+                        });
                 });
 
             modelBuilder.Entity("CashRegister.Data.Entities.Models.Receipt", b =>

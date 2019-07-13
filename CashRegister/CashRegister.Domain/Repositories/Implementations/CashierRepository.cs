@@ -5,6 +5,7 @@ using System.Text;
 using CashRegister.Data.Entities;
 using CashRegister.Data.Entities.Models;
 using CashRegister.Domain.Repositories.Interfaces;
+using CashRegister.Data.Helpers;
 
 namespace CashRegister.Domain.Repositories.Implementations
 {
@@ -25,6 +26,11 @@ namespace CashRegister.Domain.Repositories.Implementations
         public Cashier GetCashierById(int id)
         {
             return _context.Cashiers.Find(id);
+        }
+
+        public int GetCashierIdByPassword(string password)  
+        {
+            return _context.Cashiers.FirstOrDefault(cashier => HashHelper.ValidatePassword(password, cashier.Password)).Id;
         }
     }
 }

@@ -2,8 +2,9 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import "./NavMenu.css";
 import Axios from "axios";
+import { withRouter } from "react-router-dom";
 
-export class NavMenu extends Component {
+class NavMenu extends Component {
   static displayName = NavMenu.name;
 
   constructor(props) {
@@ -24,15 +25,13 @@ export class NavMenu extends Component {
   }
 
   handleSwitchCashier() {
-    Axios.get("/api/cashiers/get-by-id", { params: { id: 1 } }).then(
-      response => {
-        localStorage.setItem("cashier", JSON.stringify(response.data));
-      }
-    );
+    localStorage.removeItem("cashierId");
+    this.props.history.push("/cashiers");
   }
 
   handleSwitchRegister() {
-    localStorage.setItem("registerId", 1);
+    localStorage.removeItem("registerId");
+    this.props.history.push("/registers");
   }
 
   render() {
@@ -74,3 +73,5 @@ export class NavMenu extends Component {
     );
   }
 }
+
+export default withRouter(NavMenu);

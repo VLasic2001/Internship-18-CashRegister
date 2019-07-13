@@ -35,5 +35,14 @@ namespace CashRegister.Web.Controllers
                 return Ok(cashier);
             return NotFound();
         }
+
+        [HttpGet("login")]
+        public IActionResult GetCashierById(string password)
+        {
+            var cashier = _cashierRepository.GetCashierIdByPassword(password);
+            if (cashier != 0)
+                return Ok(cashier);
+            return NotFound();
+        }
     }
 }

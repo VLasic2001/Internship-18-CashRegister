@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using CashRegister.Data.Helpers;
 using CashRegister.Data.Entities.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -32,14 +33,15 @@ namespace CashRegister.Data.Entities
                 .HasForeignKey(rp => rp.ProductId);
 
             modelBuilder.Entity<Cashier>()
-           .HasData(new Cashier { Id=1, FirstName = "Ante", LastName = "Antic", Password="ant", DateOfBirth=new DateTime(2001, 06, 10) },
-                    new Cashier { Id=2, FirstName = "Ivan", LastName = "Ivanic", Password = "iva", DateOfBirth = new DateTime(1991, 06, 10) }
+           .HasData(new Cashier { Id=1, FirstName = "Ante", LastName = "Antic", Password = HashHelper.Hash("ante"), DateOfBirth=new DateTime(2001, 06, 10) },
+                    new Cashier { Id=2, FirstName = "Ivan", LastName = "Ivanic", Password = HashHelper.Hash("1234"), DateOfBirth = new DateTime(1991, 06, 10) }
            );
 
             modelBuilder.Entity<Register>()
            .HasData(new Register {Id=1},
                     new Register {Id=2}
            );
+
         }
     }
 }

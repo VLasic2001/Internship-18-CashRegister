@@ -72,7 +72,7 @@ class ReceiptDetails extends Component {
             {this.state.receipt.receiptProducts.map(receiptProduct => {
               sumOfTax +=
                 (receiptProduct.price /
-                  (receiptProduct.product.type === "excise" ? 5 : 21)) *
+                  (receiptProduct.product.type === "excise" ? 21 : 5)) *
                 receiptProduct.quantity;
               return (
                 <tr>

@@ -5,13 +5,8 @@ using CashRegister.Data.Entities.Models;
 
 namespace CashRegister.Domain.Repositories.Interfaces
 {
-    public interface ICashierRepository
+    public interface IRegisterRepository
     {
-        List<Cashier> GetAllCashiers();
-
-        Cashier GetCashierById(int id);
-
-        int GetCashierIdByPassword(string password);
-
+        List<Register> GetAllRegisters();
     }
 }

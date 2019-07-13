@@ -1,14 +1,24 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import axios from "axios";
+import { debounce } from "lodash";
 
 class AddReceipt extends Component {
   constructor(props) {
     super(props);
     this.state = { selectedProducts: [], loading: true };
+    this.handleNameSearch = debounce(this.handleNameSearch, 500);
+    this.handleBarcodeSearch = debounce(this.handleBarcodeSearch, 500);
   }
 
   componentDidMount() {
+    if (
+      localStorage.getItem("cashierId") === null ||
+      localStorage.getItem("registerId") === null
+    ) {
+      alert("You must log in to create a receipt");
+      this.props.history.push("/");
+    }
     axios.get("/api/products/all").then(response => {
       this.setState({
         products: response.data,
@@ -45,8 +55,12 @@ class AddReceipt extends Component {
       selectedProducts
     });
   }
-  handleSearch(e) {
-    if (e.target.value.length <= 3) {
+
+  handleNameSearch() {
+    if (this.refs.name.value === null) {
+      return;
+    }
+    if (this.refs.name.value.length <= 3) {
       axios.get("/api/products/all").then(response => {
         this.setState({
           products: response.data
@@ -55,8 +69,31 @@ class AddReceipt extends Component {
       return;
     }
     axios
-      .get("/api/products/search-products", {
-        params: { search: e.target.value }
+      .get("/api/products/search-products-by-name", {
+        params: { search: this.refs.name.value }
+      })
+      .then(response => {
+        this.setState({
+          products: response.data
+        });
+      });
+  }
+
+  handleBarcodeSearch() {
+    if (this.refs.barcode.value === null) {
+      return;
+    }
+    if (this.refs.barcode.value.length <= 3) {
+      axios.get("/api/products/all").then(response => {
+        this.setState({
+          products: response.data
+        });
+      });
+      return;
+    }
+    axios
+      .get("/api/products/search-products-by-barcode", {
+        params: { search: this.refs.barcode.value }
       })
       .then(response => {
         this.setState({
@@ -79,8 +116,8 @@ class AddReceipt extends Component {
       };
     });
     let receipt = {
-      cashierId: JSON.parse(localStorage.getItem("cashier")).id,
-      registerId: 1,
+      cashierId: localStorage.getItem("cashierId"),
+      registerId: localStorage.getItem("registerId"),
       receiptProducts: receiptProducts
     };
     axios
@@ -102,7 +139,12 @@ class AddReceipt extends Component {
     ) : (
       <div>
         <h3>List of Products</h3>
-        Search by Name: <input onChange={e => this.handleSearch(e)} />
+        Search by Name:{" "}
+        <input onChange={() => this.handleNameSearch()} ref="name" />
+        <br />
+        <br />
+        Search by Barcode:{" "}
+        <input onChange={() => this.handleBarcodeSearch()} ref="barcode" />
         <div className="scroll">
           {this.state.products.map(product => {
             return (
