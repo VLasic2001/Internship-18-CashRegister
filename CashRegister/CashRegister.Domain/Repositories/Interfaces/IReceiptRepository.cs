@@ -12,5 +12,7 @@ namespace CashRegister.Domain.Repositories.Interfaces
         bool AddReceipt(Receipt receiptToAdd);
 
         Receipt GetReceiptById(Guid id);
+
+        List<Receipt> GetReceiptsByDate(long date);
     }
 }

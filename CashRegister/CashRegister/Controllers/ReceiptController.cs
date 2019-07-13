@@ -43,5 +43,14 @@ namespace CashRegister.Web.Controllers
                 return Ok(receipt);
             return NotFound();
         }
+
+        [HttpGet("search-by-date")]
+        public IActionResult GetReceiptsByDate(long date)
+        {
+            var receipt = _receiptRepository.GetReceiptsByDate(date);
+            if (receipt != null)
+                return Ok(receipt);
+            return NotFound();
+        }
     }
 }

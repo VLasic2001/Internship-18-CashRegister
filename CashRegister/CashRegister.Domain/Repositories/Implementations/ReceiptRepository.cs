@@ -40,12 +40,17 @@ namespace CashRegister.Domain.Repositories.Implementations
 
         public List<Receipt> GetAllReceipts()
         {
-            return _context.Receipts.Include(receipt => receipt.ReceiptProducts).Include(receipt => receipt.Cashier).ToList();
+            return _context.Receipts.Include(r => r.Cashier).Include(r => r.ReceiptProducts).ThenInclude(rp => rp.Product).ToList();
         }
 
         public Receipt GetReceiptById(Guid id)
         {
             return _context.Receipts.Include(r => r.Cashier).Include(r => r.ReceiptProducts).ThenInclude(rp => rp.Product).First(receipt => receipt.Id == id);
+        }
+
+        public List<Receipt> GetReceiptsByDate(long date)
+        {
+            return _context.Receipts.Where(receipt => receipt.DateOfIssue >= (new DateTime(1970, 1, 1) + new TimeSpan(date * 10000))).Include(r => r.Cashier).Include(r => r.ReceiptProducts).ThenInclude(rp => rp.Product).ToList();
         }
     }
 }

@@ -32,7 +32,6 @@ class ReceiptDetails extends Component {
 
   handlePrint() {
     let a = document.getElementsByClassName("receipt")[0];
-    console.log(a);
     new Printd().print(a);
   }
 
