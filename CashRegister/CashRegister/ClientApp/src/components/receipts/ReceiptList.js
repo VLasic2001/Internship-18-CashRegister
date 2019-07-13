@@ -6,17 +6,23 @@ import { Printd } from "printd";
 class ProductList extends Component {
   constructor(props) {
     super(props);
-    this.state = { receipts: [], loading: true };
+    this.state = { receipts: [], loading: true, page: 1 };
     this.priceSumOfReceipt = this.priceSumOfReceipt.bind(this);
   }
 
   componentDidMount() {
-    axios.get("/api/receipts/all").then(response => {
-      this.setState({
-        receipts: response.data,
-        loading: false
+    axios
+      .get("/api/receipts/search-by-date", {
+        params: {
+          page: 1
+        }
+      })
+      .then(response => {
+        this.setState({
+          receipts: response.data,
+          loading: false
+        });
       });
-    });
   }
 
   priceSumOfReceipt(receipt) {
@@ -27,67 +33,44 @@ class ProductList extends Component {
     return sum;
   }
 
-  // handlePrint(receipt) {
-  //   let sumOfTax = 0;
-  //   let d = React.createElement("div", { className: "receipt" }, [
-  //     <div>
-  //       <h2>Id: {receipt.id}</h2>
-  //       <span>
-  //         Date of Issue:{" "}
-  //         {new Intl.DateTimeFormat("en-GB", {
-  //           year: "numeric",
-  //           month: "numeric",
-  //           day: "numeric",
-  //           hour: "numeric",
-  //           minute: "numeric",
-  //           second: "numeric",
-  //           hour12: false
-  //         }).format(new Date(Date.parse(receipt.dateOfIssue)))}
-  //       </span>
-  //       <br />
-  //       <span>
-  //         Cashier: {receipt.cashier.firstName} {receipt.cashier.firstName}
-  //       </span>
-  //       <br />
-  //       <span>Cash Register Id: {receipt.registerId}</span>
-  //       <table>
-  //         <tr>
-  //           <th>Name</th>
-  //           <th>Price</th>
-  //           <th>Quantity</th>
-  //           <th>Total</th>
-  //         </tr>
-  //         {receipt.receiptProducts.map(receiptProduct => {
-  //           sumOfTax +=
-  //             (receiptProduct.price /
-  //               (receiptProduct.product.type === "excise" ? 5 : 21)) *
-  //             receiptProduct.quantity;
-  //           return (
-  //             <tr>
-  //               <td>{receiptProduct.product.name}</td>
-  //               <td>{receiptProduct.price}</td>
-  //               <td>{receiptProduct.quantity}</td>
-  //               <td>{receiptProduct.price * receiptProduct.quantity}</td>
-  //             </tr>
-  //           );
-  //         })}
-  //       </table>
-  //       <br />
-  //       <p>
-  //         Price Without Tax:{" "}
-  //         {(this.priceSumOfReceipt(receipt) - sumOfTax).toFixed(2)}
-  //       </p>
-  //       <p>Tax: {sumOfTax.toFixed(2)}</p>
-  //       <p>Price With Tax: {this.priceSumOfReceipt(receipt).toFixed(2)}</p>
-  //     </div>
-  //   ]);
-  //   console.log(d);
-  // }
+  handleNextPage() {
+    axios
+      .get("/api/receipts/search-by-date", {
+        params: {
+          date:
+            this.refs.date.value === "" ? 0 : Date.parse(this.refs.date.value),
+          page: this.state.page + 1
+        }
+      })
+      .then(response => {
+        this.setState({
+          receipts: response.data,
+          page: this.state.page + 1
+        });
+      });
+  }
+
+  handlePrevPage() {
+    axios
+      .get("/api/receipts/search-by-date", {
+        params: {
+          date:
+            this.refs.date.value === "" ? 0 : Date.parse(this.refs.date.value),
+          page: this.state.page - 1
+        }
+      })
+      .then(response => {
+        this.setState({
+          receipts: response.data,
+          page: this.state.page - 1
+        });
+      });
+  }
 
   handleDateSearch() {
     axios
       .get("/api/receipts/search-by-date", {
-        params: { date: Date.parse(this.refs.date.value) }
+        params: { date: Date.parse(this.refs.date.value), page: 1 }
       })
       .then(response => {
         this.setState({
@@ -111,6 +94,20 @@ class ProductList extends Component {
             Search
           </button>
         </p>
+        <button
+          className="edit-button"
+          onClick={() => this.handlePrevPage()}
+          disabled={this.state.page === 1}
+        >
+          Prev page
+        </button>{" "}
+        <button
+          className="edit-button"
+          onClick={() => this.handleNextPage()}
+          disabled={this.state.receipts.length < 10}
+        >
+          Next page
+        </button>
         <span>No Receipts Found</span>
       </div>
     ) : (
@@ -125,6 +122,20 @@ class ProductList extends Component {
             Search
           </button>
         </p>
+        <button
+          className="edit-button"
+          onClick={() => this.handlePrevPage()}
+          disabled={this.state.page === 1}
+        >
+          Prev page
+        </button>{" "}
+        <button
+          className="edit-button"
+          onClick={() => this.handleNextPage()}
+          disabled={this.state.receipts.length < 10}
+        >
+          Next page
+        </button>
         {this.state.receipts.map(receipt => {
           return (
             <div className="product">
@@ -155,12 +166,6 @@ class ProductList extends Component {
                     Details
                   </Link>
                   {"  "}
-                  <button
-                    className="edit-button"
-                    // onClick={() => this.handlePrint(receipt)}
-                  >
-                    Print
-                  </button>
                 </div>
               </div>
             </div>

@@ -48,9 +48,9 @@ namespace CashRegister.Domain.Repositories.Implementations
             return _context.Receipts.Include(r => r.Cashier).Include(r => r.ReceiptProducts).ThenInclude(rp => rp.Product).First(receipt => receipt.Id == id);
         }
 
-        public List<Receipt> GetReceiptsByDate(long date)
+        public List<Receipt> GetReceiptsByDate(long date, int page)
         {
-            return _context.Receipts.Where(receipt => receipt.DateOfIssue >= (new DateTime(1970, 1, 1) + new TimeSpan(date * 10000))).Include(r => r.Cashier).Include(r => r.ReceiptProducts).ThenInclude(rp => rp.Product).ToList();
+            return _context.Receipts.Where(receipt => receipt.DateOfIssue >= (new DateTime(1970, 1, 1) + new TimeSpan(date * 10000))).Include(r => r.Cashier).Include(r => r.ReceiptProducts).ThenInclude(rp => rp.Product).Skip((page - 1) * 10).Take(10).ToList();
         }
     }
 }

@@ -58,7 +58,7 @@ class ReceiptDetails extends Component {
           <br />
           <span>
             Cashier: {this.state.receipt.cashier.firstName}{" "}
-            {this.state.receipt.cashier.firstName}
+            {this.state.receipt.cashier.lastName}
           </span>
           <br />
           <span>Cash Register Id: {this.state.receipt.registerId}</span>

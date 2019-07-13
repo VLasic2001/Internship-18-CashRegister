@@ -57,6 +57,7 @@ class AddReceipt extends Component {
   }
 
   handleNameSearch() {
+    this.refs.barcode.value = "";
     if (this.refs.name.value === null) {
       return;
     }
@@ -80,6 +81,7 @@ class AddReceipt extends Component {
   }
 
   handleBarcodeSearch() {
+    this.refs.name.value = "";
     if (this.refs.barcode.value === null) {
       return;
     }

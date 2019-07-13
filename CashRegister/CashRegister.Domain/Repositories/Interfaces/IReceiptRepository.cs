@@ -13,6 +13,6 @@ namespace CashRegister.Domain.Repositories.Interfaces
 
         Receipt GetReceiptById(Guid id);
 
-        List<Receipt> GetReceiptsByDate(long date);
+        List<Receipt> GetReceiptsByDate(long date, int page);
     }
 }
