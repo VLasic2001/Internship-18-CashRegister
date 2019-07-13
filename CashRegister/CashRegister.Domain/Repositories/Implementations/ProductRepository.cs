@@ -25,9 +25,13 @@ namespace CashRegister.Domain.Repositories.Implementations
 
         public bool AddProduct(Product productToAdd)
         {
+            if (string.IsNullOrEmpty(productToAdd.Barcode) || string.IsNullOrEmpty(productToAdd.Name) || 
+                productToAdd.PriceWithTax <= 0 || productToAdd.AvailableAmount <= 0) {
+                return false;
+            }
             var doesProductExist = _context.Products.Any(product =>
                 string.Equals(product.Barcode, productToAdd.Barcode, StringComparison.CurrentCultureIgnoreCase));
-            if (doesProductExist || string.IsNullOrEmpty(productToAdd.Barcode))
+            if (doesProductExist)
                 return false;
 
             _context.Products.Add(productToAdd);

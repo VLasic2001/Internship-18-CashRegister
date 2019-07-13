@@ -118,6 +118,9 @@ class AddReceipt extends Component {
       return;
     }
     let receiptProducts = selectedProducts.map(selectedProduct => {
+      if (this.refs[selectedProduct.name] === null) {
+        return;
+      }
       return {
         productId: selectedProduct.id,
         quantity: this.refs[selectedProduct.name].value,

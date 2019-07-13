@@ -20,6 +20,9 @@ namespace CashRegister.Domain.Repositories.Implementations
 
         public Guid? AddReceipt(Receipt receiptToAdd)
         {
+            if(receiptToAdd.CashierId == null || receiptToAdd.DateOfIssue == null || receiptToAdd.RegisterId == null) {
+                return null;
+            }
             receiptToAdd.ReceiptProducts.ToList().ForEach(receiptProduct => 
                 receiptProduct.Product = _context.Products.Find(receiptProduct.ProductId));
             var areProductsUnavailable = receiptToAdd.ReceiptProducts.Any(receiptProduct =>
