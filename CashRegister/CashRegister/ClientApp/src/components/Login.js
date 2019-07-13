@@ -27,8 +27,7 @@ class Login extends Component {
       .then(response => {
         localStorage.setItem("cashierId", response.data);
         this.props.history.push("/");
-      })
-      .catch(alert("Login unsuccessful"));
+      });
   }
 
   render() {

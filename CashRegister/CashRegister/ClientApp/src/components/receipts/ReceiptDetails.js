@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import Axios from "axios";
 import { Printd } from "printd";
+import { withRouter } from "react-router-dom";
+import queryString from "query-string";
 import "./Receipt.css";
 
 class ReceiptDetails extends Component {
@@ -20,6 +22,13 @@ class ReceiptDetails extends Component {
         });
       }
     );
+  }
+
+  componentDidUpdate() {
+    if (queryString.parse(this.props.location.search).print) {
+      let a = document.getElementsByClassName("receipt")[0];
+      new Printd().print(a);
+    }
   }
 
   priceSumOfReceipt(receipt) {
@@ -102,8 +111,9 @@ class ReceiptDetails extends Component {
         </div>
       </div>
     );
+
     return <div>{content}</div>;
   }
 }
 
-export default ReceiptDetails;
+export default withRouter(ReceiptDetails);

@@ -6,12 +6,13 @@ import { debounce } from "lodash";
 class AddReceipt extends Component {
   constructor(props) {
     super(props);
-    this.state = { selectedProducts: [], loading: true };
+    this.state = { selectedProducts: [], loading: true, selectedId: 0 };
     this.handleNameSearch = debounce(this.handleNameSearch, 500);
     this.handleBarcodeSearch = debounce(this.handleBarcodeSearch, 500);
   }
 
   componentDidMount() {
+    document.addEventListener("keydown", e => this.handleKeyPress(e));
     if (
       localStorage.getItem("cashierId") === null ||
       localStorage.getItem("registerId") === null
@@ -64,7 +65,8 @@ class AddReceipt extends Component {
     if (this.refs.name.value.length <= 3) {
       axios.get("/api/products/all").then(response => {
         this.setState({
-          products: response.data
+          products: response.data,
+          selectedId: 0
         });
       });
       return;
@@ -75,7 +77,8 @@ class AddReceipt extends Component {
       })
       .then(response => {
         this.setState({
-          products: response.data
+          products: response.data,
+          selectedId: 0
         });
       });
   }
@@ -88,7 +91,8 @@ class AddReceipt extends Component {
     if (this.refs.barcode.value.length <= 3) {
       axios.get("/api/products/all").then(response => {
         this.setState({
-          products: response.data
+          products: response.data,
+          selectedId: 0
         });
       });
       return;
@@ -99,7 +103,8 @@ class AddReceipt extends Component {
       })
       .then(response => {
         this.setState({
-          products: response.data
+          products: response.data,
+          selectedId: 0
         });
       });
   }
@@ -109,6 +114,9 @@ class AddReceipt extends Component {
     selectedProducts = selectedProducts.filter(
       selectedProduct => this.refs[selectedProduct.name].value > 0
     );
+    if (selectedProducts.length < 1) {
+      return;
+    }
     let receiptProducts = selectedProducts.map(selectedProduct => {
       return {
         productId: selectedProduct.id,
@@ -124,15 +132,39 @@ class AddReceipt extends Component {
     };
     axios
       .post("api/receipts/add", receipt)
-      .then(() => {
+      .then(response => {
         alert("Add successful");
-        this.props.history.push("/receipts");
+        this.props.history.push(
+          `/receipts/details/${response.data}?print=true`
+        );
       })
       .catch(() => alert("Add unsuccessful"));
   }
 
   handleClear() {
     this.setState({ selectedProducts: [] });
+  }
+
+  handleKeyPress(e) {
+    if (e.key === "Enter") {
+      this.handleAddProduct(
+        this.state.products.filter(
+          (product, index) => index === this.state.selectedId
+        )[0]
+      );
+    } else if (e.keyCode === 38) {
+      if (this.state.selectedId === 0) {
+        return;
+      }
+      this.setState({ selectedId: this.state.selectedId - 1 });
+    } else if (e.keyCode === 40) {
+      if (this.state.selectedId === this.state.products.length - 1) {
+        return;
+      }
+      this.setState({ selectedId: this.state.selectedId + 1 });
+    } else if (e.keyCode === 113) {
+      this.handleSubmit();
+    }
   }
 
   render() {
@@ -148,10 +180,12 @@ class AddReceipt extends Component {
         Search by Barcode:{" "}
         <input onChange={() => this.handleBarcodeSearch()} ref="barcode" />
         <div className="scroll">
-          {this.state.products.map(product => {
+          {this.state.products.map((product, index) => {
             return (
               <p
-                className="product"
+                className={
+                  index === this.state.selectedId ? "product bgC-r" : "product"
+                }
                 onClick={() => this.handleAddProduct(product)}
               >
                 {product.name} ({product.barcode}) - Available Amount:{" "}
@@ -198,7 +232,7 @@ class AddReceipt extends Component {
               onClick={() => this.handleSubmit()}
               disabled={this.state.selectedProducts.length < 1}
             >
-              Complete Receipt
+              Complete Receipt (F2)
             </button>{" "}
             <button
               className="submit-button"

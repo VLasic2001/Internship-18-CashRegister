@@ -18,14 +18,14 @@ namespace CashRegister.Domain.Repositories.Implementations
 
         private readonly CashRegisterContext _context;
 
-        public bool AddReceipt(Receipt receiptToAdd)
+        public Guid? AddReceipt(Receipt receiptToAdd)
         {
             receiptToAdd.ReceiptProducts.ToList().ForEach(receiptProduct => 
                 receiptProduct.Product = _context.Products.Find(receiptProduct.ProductId));
             var areProductsUnavailable = receiptToAdd.ReceiptProducts.Any(receiptProduct =>
                 receiptProduct.Product.AvailableAmount < receiptProduct.Quantity);
             if (areProductsUnavailable)
-                return false;
+                return null;
 
             receiptToAdd.ReceiptProducts.ToList().ForEach(receiptProduct =>
             {
@@ -35,7 +35,7 @@ namespace CashRegister.Domain.Repositories.Implementations
             receiptToAdd.DateOfIssue = DateTime.Now;
             _context.Receipts.Add(receiptToAdd);
             _context.SaveChanges();
-            return true;
+            return receiptToAdd.Id;
         }
 
         public List<Receipt> GetAllReceipts()

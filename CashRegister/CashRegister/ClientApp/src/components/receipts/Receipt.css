@@ -3,3 +3,7 @@ th {
   width: 300px;
   border-right: 20px solid transparent;
 }
+
+.bgC-r {
+  background-color: red;
+}

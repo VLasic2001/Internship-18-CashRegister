@@ -30,8 +30,8 @@ namespace CashRegister.Web.Controllers
         public IActionResult AddReceipt(Receipt receiptToAdd)
         {
             var receiptGuid = _receiptRepository.AddReceipt(receiptToAdd);
-            if (receiptGuid)
-                return Ok();
+            if (receiptGuid != null)
+                return Ok(receiptGuid);
             return Forbid();
         }
 

@@ -10,18 +10,8 @@ class NavMenu extends Component {
   constructor(props) {
     super(props);
 
-    this.toggleNavbar = this.toggleNavbar.bind(this);
     this.handleSwitchCashier = this.handleSwitchCashier.bind(this);
     this.handleSwitchRegister = this.handleSwitchRegister.bind(this);
-    this.state = {
-      collapsed: true
-    };
-  }
-
-  toggleNavbar() {
-    this.setState({
-      collapsed: !this.state.collapsed
-    });
   }
 
   handleSwitchCashier() {
@@ -66,7 +56,7 @@ class NavMenu extends Component {
             className="buttons"
             onClick={() => this.handleSwitchCashier()}
           >
-            Log out
+            {localStorage.getItem("cashierId") !== null ? "Log out" : "Log in"}
           </button>
         </div>
       </header>

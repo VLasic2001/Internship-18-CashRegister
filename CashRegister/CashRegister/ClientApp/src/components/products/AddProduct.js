@@ -5,7 +5,22 @@ import Axios from "axios";
 class AddProduct extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      barcodeInput: "",
+      nameInput: "",
+      priceInput: "",
+      amountInput: ""
+    };
+  }
+
+  componentDidMount() {
+    document.addEventListener("keydown", e => this.handleKeyPress(e));
+  }
+
+  handleKeyPress(e) {
+    if (e.key === "Enter") {
+      this.handleSubmit();
+    }
   }
 
   handleInputChange(e) {
@@ -13,6 +28,15 @@ class AddProduct extends Component {
   }
 
   handleSubmit() {
+    if (
+      this.state.barcodeInput.trim() === "" ||
+      this.state.nameInput.trim() === "" ||
+      this.state.priceInput <= 0 ||
+      this.state.amountInput <= 0
+    ) {
+      alert("Format invalid");
+      return;
+    }
     Axios.post("api/products/add", {
       barcode: this.state.barcodeInput,
       name: this.state.nameInput,
@@ -77,7 +101,7 @@ class AddProduct extends Component {
           />
         </p>
         <button className="submit-button" onClick={() => this.handleSubmit()}>
-          Add Product
+          Add Product (Enter)
         </button>
       </div>
     );
